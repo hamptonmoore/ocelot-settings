@@ -253,16 +253,11 @@ function lib220(config) {
       return runner.pauseImmediate(() => {
         const userEmail = localStorage.getItem('userEmail'),
               sessionId = localStorage.getItem('sessionId');
-        if (userEmail === null || sessionId === null) {
-          if (runnerResult.value.isRunning) {
-            runner.continueImmediate({
-              type: 'exception',
-              stack: [],
-              value: new Error(`User is not logged in`)
-            });
-          } else {
-            runnerResult.value.onStopped();
-          }
+        if (userEmail === null) {
+          userEmail = "anonymousUser"
+        }
+         if (sessionId === null) {
+          sessionId = "anonymousUser"
         }
         const encodedURL = encodeURIComponent(url);
         const baseUrl = config.baseUrl;
